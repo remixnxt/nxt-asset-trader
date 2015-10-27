@@ -4,7 +4,7 @@ import json
 import time
 import sys
 
-mm_account_id = ""
+mm_account_id = "NXT-YSKR-TC9G-X4RR-FV8NY"
 
 def get_asset_name(asset_id):
     return nxt_api({'requestType' : 'getAsset', 'asset' : asset_id})["name"]
@@ -187,7 +187,7 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
     wait_time = 0
 
     while wait_time < 60:
-        print("-")
+        print "-"
         wait_time += 1
 
         time.sleep(1)
@@ -229,9 +229,9 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 nxt_api({'requestType' : 'broadcastTransaction', 'transactionBytes' : bytes})
                 print "Received bid from market maker. Assets sent."
                 print "Market maker price", mm_price
-                print "Asset exchange price", ae_price 
-                print 
-                print "Received", amount_nxt, "NXT for", num_assets, get_asset_name(asset_id), "assets",       
+                print "Asset exchange price", ae_price
+                print
+                print "Received", amount_nxt, "NXT for", num_assets, get_asset_name(asset_id), "assets"      
 
                 return
             
@@ -241,13 +241,13 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
 
 def main():
     if len(sys.argv) == 1:
-        print("Examples:")
-        print("\n")
-        print("python assettrader.py secretphrase - display account information")
-        print("python assettrader.py secretphrase buy 3061160746493230502 1") 
-        print("       --- buy Jinn, spend 1 NXT")
-        print("python assettrader.py secretphrase sell 3061160746493230502 1")
-        print("       --- sell 1 Jinn asset")
+        print "Examples:"
+        print
+        print "python assettrader.py secretphrase - display account information"
+        print "python assettrader.py secretphrase buy 3061160746493230502 1"
+        print "       --- buy Jinn, spend 1 NXT"
+        print "python assettrader.py secretphrase sell 3061160746493230502 1"
+        print "       --- sell 1 Jinn asset"
 
     elif len(sys.argv) == 2:
         secret_phrase = sys.argv[1]
