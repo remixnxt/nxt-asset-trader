@@ -18,12 +18,14 @@ Transaction costs are 2 NXT instead of the normal 1 NXT.
 
 Usage example:
 
-Spend 1000 NXT (+ 2 NXT transaction cost) to buy Jinn assets.
+Spend 1000 NXT (+ 2 NXT transaction cost) to buy SuperNET assets.
 'secretphrase' is your accounts secret.
 
-python assettrader.py secretphrase buy 3061160746493230502 1000
+python assettrader.py secretphrase buy 12071612744977229797 1000
 
-Sell 10 Jinn assets:
+Sell 10 SuperNET assets:
 
-python assettrader.py secretphrase sell 3061160746493230502 10
+python assettrader.py secretphrase sell 12071612744977229797 10
+
+
 

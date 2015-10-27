@@ -159,12 +159,13 @@ def get_avg_asset_price(asset, asset_quantity, action):
 def get_asks(asset):
     k = 100000000.0 / (pow(10, get_decimals(asset)))
     req = nxt_api({'requestType' : 'getAskOrders', 'asset' : asset})
+    d = pow(10.0, get_decimals(asset))
 
     asks = []
 
     for i in range(0, len(req["askOrders"])):
-        qnt = int(req["askOrders"][i]["quantityQNT"])
-        ask = (int(req["askOrders"][i]["priceNQT"]) / k, qnt / k)
+        qnt = float(req["askOrders"][i]["quantityQNT"])
+        ask = (float(req["askOrders"][i]["priceNQT"]) / k, qnt / d)
         asks.append(ask)
 
     return asks
@@ -172,12 +173,13 @@ def get_asks(asset):
 def get_bids(asset):
     k = 100000000.0 / (pow(10, get_decimals(asset)))
     req = nxt_api({'requestType' : 'getBidOrders', 'asset' : asset})
+    d = pow(10.0, get_decimals(asset))
 
     bids = []
 
     for i in range(0, len(req["bidOrders"])):
-        qnt = int(req["bidOrders"][i]["quantityQNT"])
-        bid = (int(req["bidOrders"][i]["priceNQT"]) / k, qnt / k)
+        qnt = float(req["bidOrders"][i]["quantityQNT"])
+        bid = (float(req["bidOrders"][i]["priceNQT"]) / k, qnt / d)
         bids.append(bid)
 
     return bids 
@@ -201,7 +203,7 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 amount_nxt = amount
                 mm_price = amount_nxt / num_assets
                 if mm_price > ae_price:
-                    print "Asset exchange quote is better. Trade aborted. No payment sent.", ae_price, mm_price
+                    print "Asset exchange quote is better. Trade aborted. No payment sent. If you tried to buy a very small amount you may need to increase it or match it closer to the price of the asset (market maker does give change in NXT). Asset exchange price", ae_price, " Market maker price: ", mm_price
                     return 
             
                 nxt_api({'requestType' : 'broadcastTransaction', 'transactionBytes' : bytes})
@@ -223,7 +225,7 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 mm_price = amount_nxt / num_assets
                 
                 if mm_price < ae_price:
-                    print "Asset exchange quote is better. Trade aborted.", mm_price, ae_price
+                    print "Asset exchange quote is better. Trade aborted. Market maker price: ", mm_price, ". Asset exchange price: ", ae_price
                     return 
             
                 nxt_api({'requestType' : 'broadcastTransaction', 'transactionBytes' : bytes})
