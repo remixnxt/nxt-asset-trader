@@ -203,7 +203,7 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 amount_nxt = amount
                 mm_price = amount_nxt / num_assets
                 if mm_price > ae_price:
-                    print "Asset exchange quote is better. Trade aborted. No payment sent. If you tried to buy a very small amount you may need to increase it or match it closer to the price of the asset (market maker does give change in NXT). Asset exchange price", ae_price, " Market maker price: ", mm_price
+                    print "Asset exchange quote is better. Trade aborted. No payment sent. If you tried to buy a very small amount you may need to increase it or match it closer to the price of the asset (market maker does not give change in NXT). Asset exchange price", ae_price, " Market maker price: ", mm_price
                     return 
             
                 nxt_api({'requestType' : 'broadcastTransaction', 'transactionBytes' : bytes})
