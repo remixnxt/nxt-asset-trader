@@ -185,6 +185,14 @@ def get_bids(asset):
     return bids 
 
 def mm_request(request, amount, account, asset_id, secret_phrase):
+    test = False
+    if request == "buytest":
+        request = "buy"
+        test = True
+    elif request == "selltest":
+        request = "sell"
+        test = True
+
     (bytes, full_hash) = send_request(request, asset_id, amount, secret_phrase)
     wait_time = 0
 
@@ -202,6 +210,12 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 ae_price = get_avg_asset_price(asset_id, num_assets, "buy")
                 amount_nxt = amount
                 mm_price = amount_nxt / num_assets
+
+                if test:
+                    print "Market maker price", mm_price
+                    print "Asset exchange price", ae_price
+                    return
+                
                 if mm_price > ae_price:
                     print "Asset exchange quote is better. Trade aborted. No payment sent. If you tried to buy a very small amount you may need to increase it or match it closer to the price of the asset (market maker does not give change in NXT). Asset exchange price", ae_price, " Market maker price: ", mm_price
                     return 
@@ -223,6 +237,11 @@ def mm_request(request, amount, account, asset_id, secret_phrase):
                 num_assets = amount 
                 ae_price = get_avg_asset_price(asset_id, num_assets, "sell")
                 mm_price = amount_nxt / num_assets
+
+                if test:
+                    print "Market maker price", mm_price
+                    print "Asset exchange price", ae_price
+                    return
                 
                 if mm_price < ae_price:
                     print "Asset exchange quote is better. Trade aborted. Market maker price: ", mm_price, ". Asset exchange price: ", ae_price
